@@ -7,10 +7,13 @@ import Categories from './views/Categories.vue';
 import Archives from './views/Archives.vue';
 import About from './views/About.vue';
 import Contact from './views/Contact.vue';
+import PostDetail from './views/PostDetail.vue';
+import { myPosts } from './data/posts';
 import { Sun, Moon } from 'lucide-vue-next';
 
 const isDark = ref(false);
 const currentTab = ref('home');
+const selectedPost = ref<any>(null);
 
 const toggleDark = () => {
   isDark.value = !isDark.value;
@@ -21,7 +24,16 @@ const toggleDark = () => {
   }
 };
 
-const posts = ref([
+const navigateToPost = (post: any) => {
+  selectedPost.value = post;
+};
+
+const backToHome = () => {
+  selectedPost.value = null;
+};
+
+// 原有示例文章（无详情内容）
+const demoPosts = [
   {
     id: 1,
     title: '探索现代前端之美',
@@ -46,7 +58,10 @@ const posts = ref([
     category: '工具',
     image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=800'
   }
-]);
+];
+
+// 合并：示例文章 + 你的笔记
+const posts = ref([...demoPosts, ...myPosts]);
 </script>
 
 <template>
@@ -61,18 +76,18 @@ const posts = ref([
     <!-- Main Layout -->
     <div class="flex relative z-10">
       <Sidebar v-model:currentTab="currentTab" />
-      
+
       <main class="flex-1 px-8 py-12 md:px-16 md:py-20 lg:px-24">
         <!-- Header -->
         <header class="flex justify-between items-center mb-16">
-          <div @click="currentTab = 'home'" class="cursor-pointer group">
+          <div @click="currentTab = 'home'; selectedPost = null" class="cursor-pointer group">
             <h1 class="text-4xl md:text-5xl font-light tracking-tight mb-2 serif group-hover:opacity-70 transition-opacity">
-              时光 <span class="italic text-gray-500">笔谈</span>
+              时光 <span class="italic text-gray-500 dark:text-zinc-400">笔谈</span>
             </h1>
-            <p class="text-sm uppercase tracking-[0.2em] opacity-60">Personal Thoughts & Journal</p>
+            <p class="text-sm uppercase tracking-[0.2em] opacity-60 dark:opacity-100 dark:text-zinc-400">Personal Thoughts & Journal</p>
           </div>
-          
-          <button 
+
+          <button
             @click="toggleDark"
             class="p-3 rounded-full border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all duration-300"
             id="theme-toggle"
@@ -84,14 +99,21 @@ const posts = ref([
 
         <!-- Dynamic Content Area -->
         <div class="relative min-h-[60vh]">
+          <!-- Post Detail View -->
+          <PostDetail
+            v-if="selectedPost"
+            :post="selectedPost"
+            @back="backToHome"
+          />
+
           <!-- Home View -->
-          <div v-if="currentTab === 'home'" class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div v-else-if="currentTab === 'home'" class="animate-in fade-in slide-in-from-bottom-4 duration-700">
             <!-- Featured Story -->
             <section class="mb-20">
               <div class="relative group cursor-pointer overflow-hidden rounded-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=1600" 
-                  alt="Featured" 
+                <img
+                  src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=1600"
+                  alt="Featured"
                   class="w-full h-[50vh] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 text-white"></div>
@@ -123,18 +145,18 @@ const posts = ref([
               <div class="flex justify-between items-end mb-10 border-b border-gray-200 dark:border-zinc-800 pb-4">
                 <h3 class="text-2xl font-light serif dark:text-white">最新发布</h3>
                 <div class="flex gap-4 text-xs font-medium uppercase tracking-widest">
-                  <a href="#" @click.prevent="currentTab = 'posts'" class="opacity-60 dark:opacity-100 dark:text-zinc-400 dark:hover:text-white hover:opacity-100 transition-opacity">查看全部</a>
+                  <a href="#" @click.prevent="currentTab = 'posts'" class="opacity-60 dark:opacity-100 dark:text-zinc-300 dark:hover:text-white hover:opacity-100 transition-opacity">查看全部</a>
                 </div>
               </div>
-              
+
               <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-                <PostCard v-for="post in posts" :key="post.id" :post="post" />
+                <PostCard v-for="post in posts" :key="post.id" :post="post" @click="navigateToPost(post)" />
               </div>
             </section>
           </div>
 
           <!-- Other Views -->
-          <Posts v-else-if="currentTab === 'posts'" />
+          <Posts v-else-if="currentTab === 'posts'" :posts="posts" @select-post="navigateToPost" />
           <Categories v-else-if="currentTab === 'categories'" />
           <Archives v-else-if="currentTab === 'archives'" />
           <About v-else-if="currentTab === 'about'" />
@@ -142,8 +164,8 @@ const posts = ref([
         </div>
 
         <!-- Footer -->
-        <footer class="mt-32 pt-12 border-t border-gray-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-8 text-sm opacity-50 dark:opacity-70 dark:text-zinc-400">
-          <p>© 2024 Modern Vue Blog. All rights reserved.</p>
+        <footer class="mt-32 pt-12 border-t border-gray-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-8 text-sm opacity-50 dark:opacity-100 dark:text-zinc-500">
+          <p>&copy; 2024 Modern Vue Blog. All rights reserved.</p>
           <div class="flex gap-8">
             <a href="#" class="hover:underline">Github</a>
             <a href="#" class="hover:underline">Twitter</a>

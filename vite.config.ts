@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/modern-vue-blog/',
     plugins: [vue(), tailwindcss()],
     resolve: {
       alias: {

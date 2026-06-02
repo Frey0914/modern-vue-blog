@@ -22,7 +22,7 @@ defineEmits(['update:currentTab']);
 <template>
   <aside 
     :class="[
-      'h-screen sticky top-0 bg-white/40 dark:bg-black/20 backdrop-blur-2xl border-r border-white/20 dark:border-white/10 transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] z-50 flex flex-col',
+      'h-screen sticky top-0 bg-white/40 dark:bg-black/20 backdrop-blur-2xl border-r border-white/20 dark:border-white/10 transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] z-50 flex flex-col overflow-y-auto overflow-x-hidden',
       isCollapsed ? 'w-20' : 'w-64'
     ]"
     @mouseenter="isCollapsed = false"
@@ -51,7 +51,7 @@ defineEmits(['update:currentTab']);
           'group flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 cursor-pointer relative',
           currentTab === item.id 
             ? 'bg-black/5 dark:bg-white/10 text-black dark:text-white ring-1 ring-black/5 dark:ring-white/20 shadow-sm font-semibold' 
-            : 'text-gray-500 dark:text-zinc-400 hover:bg-black/5 dark:hover:bg-white/5'
+            : 'text-gray-500 dark:text-zinc-300 hover:bg-black/5 dark:hover:bg-white/5'
         ]"
       >
         <component 
@@ -83,13 +83,13 @@ defineEmits(['update:currentTab']);
     <!-- Socials / Bottom -->
     <div class="p-4 border-t border-black/5 dark:border-white/5">
       <div :class="['flex items-center gap-4 overflow-hidden', isCollapsed ? 'flex-col' : 'flex-row justify-center']">
-        <a href="#" class="p-2 text-gray-500 hover:text-black dark:hover:text-zinc-300 transition-colors">
+        <a href="#" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
           <Github :size="18" />
         </a>
-        <a href="#" class="p-2 text-gray-400 hover:text-black dark:hover:text-zinc-300 transition-colors">
+        <a href="#" class="p-2 text-gray-400 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
           <Twitter :size="18" />
         </a>
-        <a href="#" class="p-2 text-gray-400 hover:text-black dark:hover:text-zinc-300 transition-colors">
+        <a href="#" class="p-2 text-gray-400 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
           <Instagram :size="18" />
         </a>
       </div>
@@ -104,5 +104,15 @@ defineEmits(['update:currentTab']);
 }
 .dark #sidebar:hover {
   box-shadow: 20px 0 50px rgba(0,0,0,0.3);
+}
+
+/* 隐藏滚动条但保留滚动功能 */
+#sidebar::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+#sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

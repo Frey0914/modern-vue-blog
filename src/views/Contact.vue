@@ -11,7 +11,7 @@ import { Mail, MapPin } from 'lucide-vue-next';
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
       <div class="space-y-12">
-        <p class="text-xl font-light opacity-70">
+        <p class="text-xl font-light opacity-70 dark:opacity-100 dark:text-zinc-300">
           无论是项目合作、技术探讨，还是仅仅想打个招呼，都欢迎给我留言。
         </p>
         <div class="space-y-6">
@@ -20,7 +20,7 @@ import { Mail, MapPin } from 'lucide-vue-next';
               <Mail :size="20" />
             </div>
             <div>
-              <p class="text-xs uppercase tracking-widest opacity-50">Email</p>
+              <p class="text-xs uppercase tracking-widest opacity-50 dark:opacity-100 dark:text-zinc-500">Email</p>
               <p>hello@studio.me</p>
             </div>
           </div>
@@ -29,7 +29,7 @@ import { Mail, MapPin } from 'lucide-vue-next';
               <MapPin :size="20" />
             </div>
             <div>
-              <p class="text-xs uppercase tracking-widest opacity-50">Base</p>
+              <p class="text-xs uppercase tracking-widest opacity-50 dark:opacity-100 dark:text-zinc-500">Base</p>
               <p>Shanghai, China</p>
             </div>
           </div>
