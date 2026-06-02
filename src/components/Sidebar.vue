@@ -82,9 +82,23 @@ defineEmits(['update:currentTab']);
 
     <!-- Socials / Bottom -->
     <div class="p-4 border-t border-black/5 dark:border-white/5">
-      <div :class="['flex items-center gap-4 overflow-hidden', isCollapsed ? 'flex-col' : 'flex-row justify-center']">
-        <a href="https://github.com/Frey0914" target="_blank" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
+      <div :class="['flex items-center gap-3 overflow-hidden', isCollapsed ? 'flex-col' : 'flex-row justify-center']">
+        <a href="https://github.com/Frey0914" target="_blank" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors" title="GitHub">
           <Github :size="18" />
+        </a>
+        <a href="https://space.bilibili.com" target="_blank" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-[#00A1D6] dark:hover:text-[#00A1D6] transition-colors" title="Bilibili">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10h2l1-3h12l1 3h2"/>
+            <path d="M5 10v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/>
+            <path d="M9 17v-2"/>
+            <path d="M15 17v-2"/>
+            <path d="M8 7V4h8v3"/>
+          </svg>
+        </a>
+        <a href="https://www.douyin.com" target="_blank" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors" title="抖音">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
         </a>
       </div>
     </div>
