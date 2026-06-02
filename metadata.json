@@ -1,0 +1,6 @@
+{
+  "name": "Modern Vue Blog",
+  "description": "A high-quality, modern personal blog built with Vue 3, featuring sleek animations, dark mode, and a responsive layout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
