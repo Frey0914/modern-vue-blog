@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Mail, MapPin } from 'lucide-vue-next';
+import { Github, MapPin } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -17,11 +17,11 @@ import { Mail, MapPin } from 'lucide-vue-next';
         <div class="space-y-6">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-full border border-gray-200 dark:border-gray-800 flex items-center justify-center">
-              <Mail :size="20" />
+              <Github :size="20" />
             </div>
             <div>
-              <p class="text-xs uppercase tracking-widest opacity-50 dark:opacity-100 dark:text-zinc-500">Email</p>
-              <p>hello@studio.me</p>
+              <p class="text-xs uppercase tracking-widest opacity-50 dark:opacity-100 dark:text-zinc-500">GitHub</p>
+              <a href="https://github.com/Frey0914" target="_blank" class="hover:underline">Frey0914</a>
             </div>
           </div>
           <div class="flex items-center gap-4">
@@ -30,7 +30,7 @@ import { Mail, MapPin } from 'lucide-vue-next';
             </div>
             <div>
               <p class="text-xs uppercase tracking-widest opacity-50 dark:opacity-100 dark:text-zinc-500">Base</p>
-              <p>Shanghai, China</p>
+              <p>Shaanxi, China</p>
             </div>
           </div>
         </div>

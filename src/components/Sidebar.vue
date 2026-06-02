@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Home, BookOpen, User, MessageCircle, Github, Twitter, Instagram, LayoutGrid, Archive } from 'lucide-vue-next';
+import { Home, BookOpen, User, MessageCircle, Github, LayoutGrid, Archive } from 'lucide-vue-next';
 
 const isCollapsed = ref(true);
 const navItems = [
@@ -83,14 +83,8 @@ defineEmits(['update:currentTab']);
     <!-- Socials / Bottom -->
     <div class="p-4 border-t border-black/5 dark:border-white/5">
       <div :class="['flex items-center gap-4 overflow-hidden', isCollapsed ? 'flex-col' : 'flex-row justify-center']">
-        <a href="#" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
+        <a href="https://github.com/Frey0914" target="_blank" class="p-2 text-gray-500 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
           <Github :size="18" />
-        </a>
-        <a href="#" class="p-2 text-gray-400 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
-          <Twitter :size="18" />
-        </a>
-        <a href="#" class="p-2 text-gray-400 dark:text-zinc-400 hover:text-black dark:hover:text-zinc-200 transition-colors">
-          <Instagram :size="18" />
         </a>
       </div>
     </div>

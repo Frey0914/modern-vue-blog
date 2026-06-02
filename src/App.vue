@@ -135,9 +135,7 @@ const posts = ref(myPosts);
         <footer class="mt-32 pt-12 border-t border-gray-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-8 text-sm opacity-50 dark:opacity-100 dark:text-zinc-500">
           <p>&copy; 2024 Modern Vue Blog. All rights reserved.</p>
           <div class="flex gap-8">
-            <a href="#" class="hover:underline">Github</a>
-            <a href="#" class="hover:underline">Twitter</a>
-            <a href="#" class="hover:underline">RSS</a>
+            <a href="https://github.com/Frey0914" target="_blank" class="hover:underline">GitHub</a>
           </div>
         </footer>
       </main>
