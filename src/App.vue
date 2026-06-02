@@ -32,36 +32,7 @@ const backToHome = () => {
   selectedPost.value = null;
 };
 
-// 原有示例文章（无详情内容）
-const demoPosts = [
-  {
-    id: 1,
-    title: '探索现代前端之美',
-    excerpt: '在现代 Web 开发中，设计与性能的结合从未如此紧密。本文探讨了如何利用 Vue 3 构建高性能且美观的用户界面。',
-    date: '2024-05-18',
-    category: '技术',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 2,
-    title: '设计系统中的极简主义',
-    excerpt: '少即是多。极简主义不仅仅是一种审美选择，更是一种功能性原则，能够大幅提升用户的认知效率。',
-    date: '2024-05-15',
-    category: '设计',
-    image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 3,
-    title: 'Vue 3 + Tailwind CSS 的完美搭配',
-    excerpt: 'Tailwind CSS 的原子化思维与 Vue 3 的组合式 API 相得益彰，极大地提高了开发者的生产力。',
-    date: '2024-05-10',
-    category: '工具',
-    image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=800'
-  }
-];
-
-// 合并：示例文章 + 你的笔记
-const posts = ref([...demoPosts, ...myPosts]);
+const posts = ref(myPosts);
 </script>
 
 <template>
@@ -110,31 +81,28 @@ const posts = ref([...demoPosts, ...myPosts]);
           <div v-else-if="currentTab === 'home'" class="animate-in fade-in slide-in-from-bottom-4 duration-700">
             <!-- Featured Story -->
             <section class="mb-20">
-              <div class="relative group cursor-pointer overflow-hidden rounded-2xl">
+              <div
+                class="relative group cursor-pointer overflow-hidden rounded-2xl"
+                @click="navigateToPost(posts[0])"
+              >
                 <img
-                  src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?auto=format&fit=crop&q=80&w=1600"
-                  alt="Featured"
+                  :src="posts[0].image"
+                  :alt="posts[0].title"
                   class="w-full h-[50vh] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 text-white"></div>
                 <div class="absolute bottom-0 left-0 p-8 md:p-12 text-white">
                   <span class="text-xs uppercase tracking-widest bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-4 inline-block">
-                    每月精选
+                    最新发布
                   </span>
                   <h2 class="text-3xl md:text-5xl font-medium mb-4 max-w-2xl leading-tight">
-                    在混乱的世界中寻找宁静：数字极简主义的实践指南
+                    {{ posts[0].title }}
                   </h2>
                   <p class="text-gray-300 max-w-xl mb-6 line-clamp-2">
-                    数字时代，注意力成为了最稀缺的资源。我们应如何平衡科技便利与内心平静？
+                    {{ posts[0].excerpt }}
                   </p>
                   <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-gray-500 overflow-hidden ring-2 ring-white/20">
-                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar" />
-                    </div>
-                    <div>
-                      <p class="text-sm font-medium">Felix</p>
-                      <p class="text-xs text-gray-400">2024年5月20日 · 12分钟阅读</p>
-                    </div>
+                    <p class="text-xs text-gray-400">{{ posts[0].date }} · {{ posts[0].category }}</p>
                   </div>
                 </div>
               </div>

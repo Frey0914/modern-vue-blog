@@ -20,38 +20,6 @@ const archives = [
       }
     ]
   },
-  {
-    year: '2024',
-    months: [
-      {
-        month: '五月',
-        posts: [
-          { title: '探索现代前端之美', date: '05-18' },
-          { title: '设计系统中的极简主义', date: '05-15' },
-          { title: 'Vue 3 + Tailwind CSS 的完美搭配', date: '05-10' },
-        ]
-      },
-      {
-        month: '四月',
-        posts: [
-          { title: '如何写出优雅的代码', date: '04-22' },
-          { title: '深色模式的设计挑战', date: '04-10' },
-        ]
-      }
-    ]
-  },
-  {
-    year: '2023',
-    months: [
-      {
-        month: '十二月',
-        posts: [
-          { title: '年度总结：我的 2023', date: '12-31' },
-          { title: '从零开始学习 TypeScript', date: '12-15' },
-        ]
-      }
-    ]
-  }
 ];
 </script>
 
