@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch, nextTick, ref, onMounted } from 'vue';
 import { ArrowLeft } from 'lucide-vue-next';
 
 const props = defineProps<{
@@ -14,10 +14,62 @@ const props = defineProps<{
 }>();
 
 const base = import.meta.env.BASE_URL;
+const articleRef = ref<HTMLElement>();
 
 const fixedContent = computed(() =>
   props.post.content?.replace(/src="\/images\//g, `src="${base}images/`)
 );
+
+const addCopyButtons = () => {
+  if (!articleRef.value) return;
+  const blocks = articleRef.value.querySelectorAll('pre');
+
+  blocks.forEach((pre) => {
+    // 避免重复添加
+    if (pre.querySelector('.copy-btn')) return;
+
+    // 让 pre 相对定位，按钮绝对定位
+    pre.style.position = 'relative';
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> 复制`;
+
+    btn.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      if (!code) return;
+
+      try {
+        await navigator.clipboard.writeText(code.textContent || '');
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 已复制`;
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> 复制`;
+          btn.classList.remove('copied');
+        }, 2000);
+      } catch {
+        // 降级方案
+        const textarea = document.createElement('textarea');
+        textarea.value = code.textContent || '';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 已复制`;
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> 复制`;
+          btn.classList.remove('copied');
+        }, 2000);
+      }
+    });
+
+    pre.appendChild(btn);
+  });
+};
+
+onMounted(addCopyButtons);
+watch(() => props.post.id, () => nextTick(addCopyButtons));
 
 defineEmits(['back']);
 </script>
@@ -48,6 +100,7 @@ defineEmits(['back']);
 
     <!-- Article content -->
     <article
+      ref="articleRef"
       class="post-content dark:text-zinc-200 leading-relaxed"
       v-html="fixedContent"
     ></article>
@@ -136,6 +189,42 @@ defineEmits(['back']);
   padding: 0;
   color: inherit;
   font-size: inherit;
+}
+
+/* 复制按钮 */
+.post-content pre .copy-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  color: #a6adc8;
+  background: #313244;
+  border: 1px solid #45475a;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.post-content pre:hover .copy-btn {
+  opacity: 1;
+}
+
+.post-content pre .copy-btn:hover {
+  background: #45475a;
+  color: #cdd6f4;
+}
+
+.post-content pre .copy-btn.copied {
+  color: #a6e3a1;
+  border-color: #a6e3a1;
+  background: rgba(166, 227, 161, 0.1);
 }
 
 .post-content table {
