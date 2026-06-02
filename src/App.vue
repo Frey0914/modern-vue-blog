@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Sidebar from './components/Sidebar.vue';
 import PostCard from './components/PostCard.vue';
 import Posts from './views/Posts.vue';
@@ -31,6 +31,11 @@ const navigateToPost = (post: any) => {
 const backToHome = () => {
   selectedPost.value = null;
 };
+
+// 切换 tab 时自动退出文章详情
+watch(currentTab, () => {
+  selectedPost.value = null;
+});
 
 const posts = ref(myPosts);
 </script>
